@@ -1,1 +1,29 @@
+name: Auto Commit
 
+# Define a programação para a execução (a cada hora neste exemplo)
+on:
+  schedule:
+    - cron: '0 * * * *'  # A cada hora (UTC)
+
+# Definindo os jobs que o GitHub Actions vai rodar
+jobs:
+  commit:
+    runs-on: ubuntu-latest  # Vai rodar no Ubuntu, mas pode ser no Windows também
+
+    steps:
+      # Passo 1: Pegar o código
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Passo 2: Criar um arquivo com a data atual (atividade)
+      - name: Create file with timestamp
+        run: echo "Atividade automática gerada em $(date)" > atividade.txt
+
+      # Passo 3: Configurar git e fazer commit
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "Seu Nome"
+          git config --global user.email "seuemail@exemplo.com"
+          git add atividade.txt
+          git commit -m "Atividade automática $(date)"
+          git push origin main
