@@ -22,8 +22,8 @@ jobs:
       # Passo 3: Configurar git e fazer commit
       - name: Commit and push changes
         run: |
-          git config --global user.name "Seu Nome"
-          git config --global user.email "seuemail@exemplo.com"
+          git config --global user.name "shashibukay"
+          git config --global user.email "zwirtesff@gmail.com"
           git add atividade.txt
           git commit -m "Atividade automática $(date)"
           git push origin main
