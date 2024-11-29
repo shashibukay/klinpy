@@ -19,11 +19,17 @@ jobs:
       - name: Create file with timestamp
         run: echo "Atividade automática gerada em $(date)" > atividade.txt
 
-      # Passo 3: Configurar git e fazer commit
-      - name: Commit and push changes
+      # Passo 3: Configurar git
+      - name: Configurar git
         run: |
           git config --global user.name "shashibukay"
           git config --global user.email "zwirtesff@gmail.com"
-          git add atividade.txt
-          git commit -m "Atividade automática $(date)"
-          git push origin main
+
+      # Passo 4: Verificar alterações antes de fazer o commit
+      - name: Check for changes before commit
+        run: |
+          git diff --exit-code || git commit -m "Atividade automática $(date)"
+
+      # Passo 5: Enviar para o repositório remoto
+      - name: Push changes
+        run: git push origin main  # ou master, se o ramo remoto for master
