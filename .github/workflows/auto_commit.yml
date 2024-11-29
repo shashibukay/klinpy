@@ -26,9 +26,10 @@ jobs:
           git config --global user.email "zwirtesff@gmail.com"
 
       # Passo 4: Verificar alterações antes de fazer o commit
-      - name: Check for changes before commit
+      - name: Check for changes
         run: |
-          git diff --exit-code || git commit -m "Atividade automática $(date)"
+          git add atividade.txt
+          git diff --cached --exit-code || git commit -m "Atividade automática $(date)"
 
       # Passo 5: Fazer push com autenticação usando o segredo
       - name: Push changes
