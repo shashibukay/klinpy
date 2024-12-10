@@ -3,7 +3,7 @@ name: Auto Commit
 # Define a programação para a execução (a cada 5 horas neste exemplo)
 on:
   schedule:
-    - cron: '0 */20 * * *'  # A cada 5 horas (UTC)
+    - cron: '0 */5 * * *'  # A cada 5 horas (UTC)
 
 # Definindo os jobs que o GitHub Actions vai rodar
 jobs:
