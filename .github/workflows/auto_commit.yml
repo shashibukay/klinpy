@@ -1,40 +1,33 @@
 name: Auto Commit
 
-# Define a programação para a execução (a cada 5 horas neste exemplo)
 on:
   schedule:
-    - cron: '0 */1 * * *'  # A cada 5 horas (UTC)
+    - cron: '*/5 * * * *'  # A cada 5 minutos (UTC)
 
-# Definindo os jobs que o GitHub Actions vai rodar
 jobs:
   commit:
-    runs-on: ubuntu-latest  # Vai rodar no Ubuntu, mas pode ser no Windows também
+    runs-on: ubuntu-latest
 
     steps:
-      # Passo 1: Pegar o código
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Passo 2: Criar um arquivo com a data atual (atividade)
       - name: Create file with timestamp
         run: echo "Atividade automática gerada em $(date)" > atividade.txt
 
-      # Passo 3: Configurar git
       - name: Configurar git
         run: |
           git config --global user.name "shashibukay"
           git config --global user.email "zwirtesff@gmail.com"
 
-      # Passo 4: Verificar alterações antes de fazer o commit
       - name: Check for changes
         run: |
           git add atividade.txt
           git diff --cached --exit-code || git commit -m "Atividade automática $(date)"
 
-      # Passo 5: Fazer push com autenticação usando o segredo
       - name: Push changes
         env:
-          MY_GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}  # Usando o segredo com nome diferente
+          MY_GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
         run: |
           git remote set-url origin https://x-access-token:${{ secrets.MY_GITHUB_TOKEN }}@github.com/shashibukay/klinpy.git
-          git push origin main  # ou master, se o ramo remoto for master
+          git push origin main
